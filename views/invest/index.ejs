@@ -1,0 +1,88 @@
+<%- include('../partials/header.ejs') -%>
+  <body>
+     <ul class="list-group">
+
+        <li class="list-group-item" >
+            <a href="localhost:8080/invest">Investimentos</a>
+            <a href="http://">Relatórios</a>
+            <a href="http://">Sair</a>
+        </li>
+
+     </ul>
+<div style="display: flex;" >
+    <div class="card col-md-8">
+         <div class="card-header">
+             <h2>Cadastro de investimentos</h2>
+         </div>
+         <div class="card-body">
+             <form action="/invest/cadastrar" method="post">
+
+
+                 <label for="valor">valor</label>
+                 <input class="form-control" type="text" name="valor">
+
+                 <label for="descricao">descrição</label>
+
+                 <input class="form-control" type="text" name="descricao">
+
+                 <label for="forma_pg">Forma de pagamento</label>
+
+                 <input class="form-control" type="text" name="forma_pg">
+
+                 <button type="submit" class="btn btn-secondary mt-3" >Cadastrar</button>
+
+             </form>
+
+
+         </div>
+    </div>
+
+    <div class="card col-md-4">
+        <div class="card-header">
+            <h2>Lista de investimentos</h2>
+        </div>
+        <div class="card-body">
+          <table class="table table-bodered" >
+              <thead>
+                 <tr>
+                    <td>valor</td>
+                    <td>forma_pg</td>
+                    <td>Data</td>
+                    <td>Ações</td>
+                 </tr>
+              </thead>
+
+              <tbody>
+                <% investimentos.forEach(investimento=>{  %>
+                   <tr>
+                      <td><%= investimento.valor %></td>
+                      <td><%= investimento.forma_pg %></td>
+                      <td><%= investimento.createdAt %></td>
+                      <td>
+                         <form action="/invest/deletar" method="post">
+                            <input type="hidden" name="id" value="<%= investimento.id %>">
+                            <button class="btn btn-danger" type="submit">Apagar</button>
+                         </form>
+
+                         <a href="/invest/edicao" class="btn btn-warning">Editar</a>
+                      </td>
+                   </tr>    
+                <% }) %>
+                 
+                 
+              </tbody>
+
+
+          </table>
+           
+           
+
+
+        </div>
+   </div>
+
+</div>
+  </body>
+
+
+<%- include('../partials/footer.ejs') -%>
