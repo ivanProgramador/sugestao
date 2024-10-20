@@ -19,6 +19,17 @@ router.post("/invest/cadastrar",(req,res)=>{
     })
 });
 
+router.get("/invest/edicao/:id",(req,res)=>{
+   const id = req.params.id;
+  
+Investimento.findOne({where:{id:id}}).then(investimento=>{
+    res.render("invest/edit",{investimento:investimento});
+     
+})
+
+  
+});
+
 router.post("/invest/atualizar",(req,res)=>{
 
     const{id,valor,descricao,forma_pg} =req.body;
@@ -30,7 +41,9 @@ router.post("/invest/atualizar",(req,res)=>{
 
 router.post("/invest/deletar",(req,res)=>{
     const id = req.body.id;
-    Investimento.destroy({where:{id:id}});
+    Investimento.destroy({where:{id:id}}).then(()=>{
+        res.redirect("/invest")
+    });
 });
 
 
