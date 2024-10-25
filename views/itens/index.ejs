@@ -1,0 +1,69 @@
+<%- include('../partials/header')-%>
+
+<div class="card mt-3 col-md-3 ">
+     <div class="card-header">
+         <h3 class="card-title">Controlle de itens</h3>
+     </div>
+
+     <div class="card-body">
+         <form action="/itens/cadastrar" method="post">
+
+            <label for="codigo">Côdigo</label>
+            <input class="form-control" type="text" name="codigo">
+            <label for="nome">Nome:</label>
+            <input class="form-control" type="text" name="nome">
+            <label for="detalhes">Detalhes:</label>
+            <input class="form-control" type="text" name="detalhes">
+            <label for="preco">Preço:</label>
+            <input class="form-control" type="text" name="preco">
+            <button type="submit" class="btn btn-secondary mt-3" ><i class="fa-solid fa-floppy-disk"></i></button>
+
+            <a class="btn btn-secondary mt-3" href="http://localhost:8070/"><i class="fa-solid fa-xmark"></i></i></a>
+            <a class="btn btn-secondary mt-3" href="/itens"><i class="fa-solid fa-arrows-rotate"></i></a>
+         </form>
+     </div>
+
+     <div class="footer">
+        <div class="card-footer">
+            
+       </div>
+     </div>
+</div>
+
+<div class="card mt-3 col-md-6 ">
+    <div class="card-header">
+        <h3 class="card-title">Itens cadastrados</h3>
+    </div>
+
+    <div class="card-body">
+
+        
+
+       
+
+        <ul class="list-group">
+            <% itens.forEach(iten=>{ %>
+                <li class="list-group-item" style="display: flex; font-size: 125%;">
+                    <%= iten.codigo %>-
+                    <%= iten.nome %>
+                    <form class="" action="/itens/apagar" method="post">
+
+                        <input type="hidden" value="<%= iten.id %>" name="id">
+
+                        <button class="btn btn-secondary ml-1 mr-1" >
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </form>
+                    
+                    <a href="/itens/edicao/<%= iten.id %>" class="btn btn-secondary mr-1 ml-1" ><i class="fa-solid fa-pen-to-square"></i></a>
+
+                </li>
+            <%  }) %>
+        </ul>
+    </div>
+</div>
+
+
+
+
+<%- include('../partials/footer')-%>

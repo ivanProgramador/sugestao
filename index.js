@@ -13,14 +13,16 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 //models 
-const Investimento = require("./models/Investimento"); 
-//controllers
-const investimentoController = require("./controllers/InvestimentoController");
 
-app.use("/",investimentoController);
+const Item = require("./models/item");
+
+//controllers
+const itensController = require("./controllers/itemController");
+
+app.use("/",itensController);
 app.use("/",(req,res)=>{
      res.render("index");
 });
-app.listen(8080,()=>{
+app.listen(8070,()=>{
     console.log('online');
 })
