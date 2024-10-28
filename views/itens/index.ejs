@@ -34,6 +34,8 @@
 <div class="card mt-3 col-md-6 ">
     <div class="card-header">
         <h3 class="card-title">Itens cadastrados</h3>
+        <input class="form-control" type="text" id="busca" placeholder="Digite o nome do item " onkeyup="debounceSearch()" >
+        
     </div>
 
     <div class="card-body">
@@ -63,6 +65,35 @@
         </ul>
     </div>
 </div>
+
+<script>
+   
+ const debounceSearch =  debounce(async function(){
+
+    const termo = document.getElementById('busca').value;
+
+    if (termo.length > 1) { // um mínimo de caracteres para iniciar a busca
+            const response = await fetch(`/buscar-itens?termo=${termo}`);
+            const itens = await response.json();
+            exibirResultados(itens);
+    }
+                                                     
+    },500);
+
+    function exibirResultados(itens) {
+        const container = document.getElementById('resultados');
+        container.innerHTML = ""; // Limpa os resultados anteriores
+        itens.forEach(item => {
+            const itemElemento = document.createElement('div');
+            itemElemento.textContent = item.nome;
+            container.appendChild(itemElemento);
+        });
+    }
+
+
+ 
+
+</script>
 
 
 
