@@ -59,21 +59,22 @@ router.post("/itens/apagar",(req,res)=>{
 
 //rota de busca de itens
 
-router.get('/buscar-itens', async (req, res) => {
-    const termo = req.query.termo;
-    console.log(termo)
+router.get('/search', async (req, res) => {
+    const query = req.query.query || '';
     try {
-        const itens = await Item.findAll({
+        const items = await Item.findAll({
             where: {
                 nome: {
-                    [Sequelize.Op.like]: `%${termo}%`
+                    [Sequelize.Op.like]: `%${query}%` // Altere 'name' para a propriedade correta
                 }
-            }
+            },
+            limit: 10 // Limite de resultados, ajuste conforme necessário
         });
-        res.json(itens);
-        
+        res.json(items);
+        console.log(items)
     } catch (error) {
-        res.status(500).send("Erro ao buscar itens.");
+        console.error(error);
+        res.status(500).send('Erro ao buscar itens');
     }
 });
 

@@ -1,6 +1,10 @@
 <%- include('../partials/header')-%>
 
-
+<style>
+    .produto {
+        display: none; /* inicialmente oculta */
+    }
+</style>
 
 <div class="card mt-3 col-md-3 ">
      <div class="card-header">
@@ -83,11 +87,27 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+
+
+
         <div class="modal-body">
-            <input type="text" id="busca" placeholder="Digite o nome do item" onkeyup="debounceSearch()">
-            <div id="resultados"></div>
+
+
+            <input type="text" id="search" placeholder="Buscar produtos...">
+
+            <div id="produtos">
+                <% itens.forEach(item => { %>
+                    <div class="produto" data-nome="<%= item.nome %>">
+                        <h3><%= item.nome %></h3>
+                        <p><%= item.descricao %></p>
+                    </div>
+                <% }) %>
+            </div>
          
         </div>
+
+
+
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary">Save changes</button>
@@ -99,57 +119,21 @@
 
 
 <script>
-    function debounce(func, delay) {
-        let debounceTimer;
-        return function(...args) {
-            clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(() => func.apply(this, args), delay);
-        };
-    }
+    const searchInput = document.getElementById('search');
+        const produtos = document.querySelectorAll('.produto');
 
-    const debounceSearch = debounce(async function() {
-        const termo = document.getElementById('busca').value;
-        if (termo.length > 1) {
-            try {
-                const response = await fetch(`/buscar-itens?termo=${termo}`);
-                const itens = await response.json();
-                exibirResultados(itens);
-            } catch (error) {
-                console.error("Erro ao buscar itens:", error);
-            }
-        }
-    }, 500);
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
 
-    function exibirResultados(itens) {
-        const container = document.getElementById('resultados');
-        container.innerHTML = ""; // Limpa os resultados anteriores
-        itens.forEach(item => {
-            const itemElemento = document.createElement('div');
-            itemElemento.classList.add('item-lista');
-
-            // Texto do nome do item
-            const itemTexto = document.createElement('span');
-            itemTexto.textContent = item.nome;
-            itemElemento.appendChild(itemTexto);
-
-            // Ícone de link para a página de detalhes
-            const linkIcone = document.createElement('a');
-            linkIcone.href = `/detalhes-item/${item.id}`; // URL com o ID do item
-            linkIcone.target = "_blank"; // Abrir em uma nova aba (opcional)
-
-            // Ícone para o link
-            const icone = document.createElement('img');
-            icone.src = "../../../icons/circle-info-solid.svg"; // Link do ícone (substitua pela URL do ícone desejado)
-            icone.alt = 'Ver detalhes';
-            icone.style.width = '16px'; // Tamanho do ícone
-            icone.style.marginLeft = '10px';
-
-            linkIcone.appendChild(icone);
-            itemElemento.appendChild(linkIcone);
-
-            container.appendChild(itemElemento);
+            produtos.forEach(produto => {
+                const nome = produto.getAttribute('data-nome').toLowerCase();
+                if (nome.includes(searchTerm)) {
+                    produto.style.display = 'block'; // mostra o produto
+                } else {
+                    produto.style.display = 'none'; // oculta o produto
+                }
+            });
         });
-    }
 </script>
 
 
