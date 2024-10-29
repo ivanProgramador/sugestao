@@ -78,6 +78,17 @@ router.get('/search', async (req, res) => {
     }
 });
 
+router.get('/detalhes/:id',(req,res)=>{
+
+    const id = req.params.id;
+
+    Item.findOne({where:{id:id}}).then(item=>{
+         res.render('itens/detalhes',{item:item});
+    })
+
+     
+})
+
 
 
 

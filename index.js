@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 //models 
-
+const Usuario = require("./models/usuarios");
 const Item = require("./models/item");
 
 //controllers

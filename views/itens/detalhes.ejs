@@ -1,0 +1,29 @@
+<%- include('../partials/header')-%>
+<div>
+   <div class="card">
+      <div class="card-header">
+         <h3><%= item.nome %></h3>
+      </div>
+
+      <%
+       const date = new Date(item.createdAt);
+       const options = { day: '2-digit', month: 'long', year: 'numeric' };
+       const formattedDate = date.toLocaleDateString('pt-BR', options);
+      %>
+
+      <div class="card-body">
+          <p>Data de cadastro: <%= formattedDate  %></p>
+          <p>Detalhes: <%= item.detalhes  %></p>
+          <p>Côdigo atribuido: <%= item.codigo  %></p>
+          <p>Côdigo na base de dados: <%= item.id  %></p>
+      </div>
+
+      <div class="card-footer">
+
+         <a class="btn btn-secondary" href="http://localhost:8070/itens"><i class="fa-solid fa-xmark"></i></a>
+
+      </div>
+   </div>
+
+</div>
+<%- include('../partials/footer')-%>

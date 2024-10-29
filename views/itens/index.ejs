@@ -8,20 +8,20 @@
 
 <div class="card mt-3 col-md-3 ">
      <div class="card-header">
-         <h3 class="card-title">Controlle de itens</h3>
+         <h3 class="card-title">Controle de itens</h3>
      </div>
 
      <div class="card-body">
-         <form action="/itens/cadastrar" method="post">
+         <form id="itemForm" action="/itens/cadastrar" method="post">
 
             <label for="codigo">Côdigo</label>
             <input class="form-control" type="text" name="codigo">
             <label for="nome">Nome:</label>
             <input class="form-control" type="text" name="nome">
             <label for="detalhes">Detalhes:</label>
-            <input class="form-control" type="text" name="detalhes">
+            <textarea class="form-control" type="text" name="detalhes"></textarea>
             <label for="preco">Preço:</label>
-            <input class="form-control" type="text" name="preco">
+            <input class="form-control" type="text" id="preco" name="preco">
             <button type="submit" class="btn btn-secondary mt-3" ><i class="fa-solid fa-floppy-disk"></i></button>
 
             <a class="btn btn-secondary mt-3" href="http://localhost:8070/"><i class="fa-solid fa-xmark"></i></i></a>
@@ -40,7 +40,7 @@
 
 
 
-<div class="card mt-3 col-md-6 ">
+<div class="card mt-3 col-md-9 ">
     <div class="card-header" style="display: flex;">
         <h3 class="card-title">Itens cadastrados</h3>
        
@@ -54,7 +54,7 @@
         
 
        
-
+       <div style="overflow-x: auto; max-height: 90%; scrollbar-width: thin;">
         <ul class="list-group">
             <% itens.forEach(iten=>{ %>
                 <li class="list-group-item" style="display: flex; font-size: 125%;">
@@ -75,6 +75,7 @@
             <%  }) %>
         </ul>
     </div>
+    </div>
 </div>
 
 <!-- Modal -->
@@ -93,14 +94,16 @@
         <div class="modal-body">
 
 
-            <input type="text" id="search" placeholder="Buscar produtos...">
+            <input class="form-control" type="text" id="search" placeholder="Buscar produtos...">
 
             <div id="produtos">
                 <% itens.forEach(item => { %>
-                    <div class="produto" data-nome="<%= item.nome %>">
-                        <h3><%= item.nome %></h3>
-                        <p><%= item.descricao %></p>
-                    </div>
+
+                    <ul class="produto list-group " data-nome="<%= item.nome %>">
+
+                        <li class="list-group-item" ><%= item.nome %> <a class="text-secondary" href="http://localhost:8070/detalhes/<%= item.id %>"><i class="fa-solid fa-circle-info"></i></a></li>
+                        
+                    </ul>
                 <% }) %>
             </div>
          
@@ -109,8 +112,7 @@
 
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
         </div>
       </div>
     </div>
@@ -127,13 +129,27 @@
 
             produtos.forEach(produto => {
                 const nome = produto.getAttribute('data-nome').toLowerCase();
+
                 if (nome.includes(searchTerm)) {
+
                     produto.style.display = 'block'; // mostra o produto
+
                 } else {
+
                     produto.style.display = 'none'; // oculta o produto
                 }
             });
         });
+
+
+document.getElementById('itemForm').onsubmit = function() {
+
+    var precoInput = document.getElementById('preco');
+
+    precoInput.value = precoInput.value.replace(',', '.');
+    
+};
+
 </script>
 
 
