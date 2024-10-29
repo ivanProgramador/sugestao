@@ -1,5 +1,7 @@
 <%- include('../partials/header')-%>
 
+
+
 <div class="card mt-3 col-md-3 ">
      <div class="card-header">
          <h3 class="card-title">Controlle de itens</h3>
@@ -31,11 +33,16 @@
      </div>
 </div>
 
+
+
+
 <div class="card mt-3 col-md-6 ">
-    <div class="card-header">
+    <div class="card-header" style="display: flex;">
         <h3 class="card-title">Itens cadastrados</h3>
-        <input class="form-control" type="text" id="busca" placeholder="Digite o nome do item " onkeyup="debounceSearch()" >
-        
+       
+        <button type="button" class="btn btn-secondary" style="margin-left: 10%;" data-toggle="modal" data-target="#exampleModal">
+            <i class="fa-duotone fa-solid fa-magnifying-glass"></i>
+        </button>
     </div>
 
     <div class="card-body">
@@ -66,43 +73,85 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <input type="text" id="busca" placeholder="Digite o nome do item" onkeyup="debounceSearch()">
+            <div id="resultados"></div>
+         
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
 <script>
-
-function debounce(func, delay) {
-    let debounceTimer;
-    return function(...args) {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => func.apply(this, args), delay);
-    };
-}
-  
-   
- const debounceSearch =  debounce(async function(){
-
-    const termo = document.getElementById('busca').value;
-
-    if (termo.length > 1) { // um mínimo de caracteres para iniciar a busca
-            const response = await fetch(`/buscar-itens?termo=${termo}`);
-            const itens = await response.json();
-            exibirResultados(itens);
+    function debounce(func, delay) {
+        let debounceTimer;
+        return function(...args) {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => func.apply(this, args), delay);
+        };
     }
-                                                     
-    },500);
+
+    const debounceSearch = debounce(async function() {
+        const termo = document.getElementById('busca').value;
+        if (termo.length > 1) {
+            try {
+                const response = await fetch(`/buscar-itens?termo=${termo}`);
+                const itens = await response.json();
+                exibirResultados(itens);
+            } catch (error) {
+                console.error("Erro ao buscar itens:", error);
+            }
+        }
+    }, 500);
 
     function exibirResultados(itens) {
         const container = document.getElementById('resultados');
         container.innerHTML = ""; // Limpa os resultados anteriores
         itens.forEach(item => {
             const itemElemento = document.createElement('div');
-            itemElemento.textContent = item.nome;
+            itemElemento.classList.add('item-lista');
+
+            // Texto do nome do item
+            const itemTexto = document.createElement('span');
+            itemTexto.textContent = item.nome;
+            itemElemento.appendChild(itemTexto);
+
+            // Ícone de link para a página de detalhes
+            const linkIcone = document.createElement('a');
+            linkIcone.href = `/detalhes-item/${item.id}`; // URL com o ID do item
+            linkIcone.target = "_blank"; // Abrir em uma nova aba (opcional)
+
+            // Ícone para o link
+            const icone = document.createElement('img');
+            icone.src = "../../../icons/circle-info-solid.svg"; // Link do ícone (substitua pela URL do ícone desejado)
+            icone.alt = 'Ver detalhes';
+            icone.style.width = '16px'; // Tamanho do ícone
+            icone.style.marginLeft = '10px';
+
+            linkIcone.appendChild(icone);
+            itemElemento.appendChild(linkIcone);
+
             container.appendChild(itemElemento);
         });
     }
-
-
- 
-
 </script>
+
 
 
 

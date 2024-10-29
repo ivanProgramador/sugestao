@@ -59,23 +59,23 @@ router.post("/itens/apagar",(req,res)=>{
 
 //rota de busca de itens
 
-router.get('/buscar-itens',async(req,res)=>{
+router.get('/buscar-itens', async (req, res) => {
     const termo = req.query.termo;
-
+    console.log(termo)
     try {
         const itens = await Item.findAll({
-             where:{
-                nome:{
-                    [Sequelize.Op.like]:`${termo}`
+            where: {
+                nome: {
+                    [Sequelize.Op.like]: `%${termo}%`
                 }
-             } 
+            }
         });
         res.json(itens);
+        
     } catch (error) {
         res.status(500).send("Erro ao buscar itens.");
-        
     }
-})
+});
 
 
 
