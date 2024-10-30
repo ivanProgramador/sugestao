@@ -1,7 +1,7 @@
 <%- include('../partials/header')-%>
 
 
-<div class="container">
+<div class="container" >
 
 
 <div class="card mt-3">
@@ -10,10 +10,9 @@
     </div>
 
     <div class="card-body">
-        <form action="/itens/cadastrar" method="post">
-
-            <input type="hidden" name="id" value="<%= item.id %>" >
-
+        
+        <form action="/itens/atualizar" method="post">
+           <input type="hidden" name="id" value="<%= item.id %>" >
            <label for="codigo">Côdigo</label>
            <input value="<%= item.codigo %>" class="form-control" type="text" name="codigo">
            <label for="nome">Nome:</label>
@@ -21,12 +20,22 @@
            <label  for="detalhes">Detalhes:</label>
            <input value="<%= item.detalhes %>" class="form-control" type="text" name="detalhes">
            <label  for="preco">Preço:</label>
+           <div class="card">
            <input value="<%= item.preco %>" class="form-control" type="text" name="preco">
+           <div class="card ">
+            <div class="card-body">
+               <img class="card-img" src=".../../../../<%= item.imagem %>" alt="Imagem do item">
+            </div>
+            </div>
+
            <button type="submit" class="btn btn-secondary mt-3" >Atualizar</button>
         </form>
     </div>
     <div class="card-footer">
          <a class="btn btn-secondary" href="/itens"><i class="fa-solid fa-xmark"></i></a>
+    </div>
+
+   
     </div>
 </div>
 </div>

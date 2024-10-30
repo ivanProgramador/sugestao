@@ -17,6 +17,10 @@ const Item = connection.define('item',{
     preco:{
         type: Sequelize.DOUBLE,
         allowNull:false
+    },
+    imagem: {
+        type: Sequelize.STRING,
+        allowNull: true
     }
     
 });

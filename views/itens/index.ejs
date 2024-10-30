@@ -12,14 +12,16 @@
      </div>
 
      <div class="card-body">
-         <form id="itemForm" action="/itens/cadastrar" method="post">
+         <form id="itemForm" action="/itens/cadastrar" method="post" enctype="multipart/form-data">
 
             <label for="codigo">Côdigo</label>
             <input class="form-control" type="text" name="codigo">
             <label for="nome">Nome:</label>
             <input class="form-control" type="text" name="nome">
             <label for="detalhes">Detalhes:</label>
-            <textarea class="form-control" type="text" name="detalhes"></textarea>
+            <textarea class="form-control mb-2" type="text" name="detalhes"></textarea>
+
+            <input class="form-control" type="file" name="imagem" accept="image/*" required><br>
             <label for="preco">Preço:</label>
             <input class="form-control" type="text" id="preco" name="preco">
             <button type="submit" class="btn btn-secondary mt-3" ><i class="fa-solid fa-floppy-disk"></i></button>

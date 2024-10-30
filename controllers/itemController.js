@@ -3,6 +3,20 @@ const router = express.Router();
 const Item = require("../models/item");
 const { Sequelize } = require("sequelize");
 
+const multer = require('multer');
+const path = require('path');
+
+const storage = multer.diskStorage({
+    destination:(req,file,cb)=>{
+        cb(null,'uploads/');
+    },
+    filename:(req,file,cb)=>{
+        cb(null,Date.now()+path.extname(file.originalname));
+    }
+});
+
+const upload = multer({storage:storage});
+
 
 
 
@@ -12,16 +26,18 @@ router.get("/itens",(req,res)=>{
   })
 })
 
-router.post("/itens/cadastrar",(req,res)=>{
+router.post("/itens/cadastrar",upload.single('imagem'), async(req,res)=>{
 
     let{codigo,nome,detalhes,preco} = req.body;
 
-    
-    Item.create({
+    const imagemPath = req.file ? req.file.path.replace(/\\/g, '/') : null;
+  
+     await Item.create({
         codigo:codigo,
         nome:nome,
         detalhes:detalhes,
-        preco:preco
+        preco:preco,
+        imagem:imagemPath
     }).then(()=>{
 
         res.redirect("/itens")
@@ -36,11 +52,14 @@ router.get("/itens/edicao/:id",(req,res)=>{
     })
 })
 
-router.post("/itens/atualizar",(req,res)=>{
+router.post("/itens/atualizar",upload.single('imagem'),async(req,res)=>{
+
+
     let{id,codigo,nome,detalhes,preco}= req.body; 
+    const imagemPath = req.file ? req.file.path: null;
 
     Item.update(
-        {codigo:codigo,nome:codigo,detalhes:codigo,preco:preco},
+        {codigo:codigo,nome:nome,detalhes:detalhes,imagem:imagemPath,preco:preco},
         {where:{id:id}}
     ).then(()=>{
         res.redirect("/itens")
