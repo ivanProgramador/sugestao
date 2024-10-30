@@ -35,7 +35,9 @@ const Item = require("./models/item");
 
 //controllers
 const itensController = require("./controllers/itemController");
+const usuariosController = require("./controllers/usuariosController");
 
+app.use("/",usuariosController);
 app.use("/",itensController);
 app.use("/",(req,res)=>{
      res.render("index");

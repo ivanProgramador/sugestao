@@ -1,0 +1,31 @@
+<%- include('../partials/header')-%>
+
+<div class="card mt-3">
+    <div class="card-header">
+         <h3 class="card-title">
+             Edição de usuários
+         </h3>
+    </div>
+    <div class="card-body">
+
+         <form action="/usuario/atualizar" method="post">
+            <input type="hidden" name="id" value="<%= usuario.id %>" >
+            <label for="nome">Nome:</label>
+            <input class="form-control" type="text" name="nome" value="<%= usuario.nome %>"><br>
+            <label for="nome">Login:</label>
+            <input class="form-control" type="number" name="login" value="<%= usuario.login %>" ><br>
+            <label for="nome">Senha:</label>
+            <input class="form-control" type="password" name="senha" value="<%= usuario.senha %>" ><br>
+            <label for="detahes">Detalhes:</label>
+            <input class="form-control" type="text" name="detalhes" value="<%= usuario.detalhes %>" ><br>
+            <label for="nivel">Nivel:</label>
+            <input class="form-control" type="number" name="nivel" value="<%= usuario.nivel %>" ><br>
+            <button class="btn btn-secondary mt-3" ><i class="fa-solid fa-floppy-disk"></i></button>
+
+            <a class="btn btn-secondary mt-3" href="http://localhost:8070/usuarios"><i class="fa-solid fa-xmark"></i></i></a>
+            
+         </form>
+    </div>
+ </div>
+
+<%- include('../partials/footer')-%>
