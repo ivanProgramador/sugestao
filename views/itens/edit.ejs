@@ -21,8 +21,13 @@
            <label  for="detalhes">Detalhes:</label>
            <input value="<%= item.detalhes %>" class="form-control" type="text" name="detalhes">
            <label  for="preco">Preço:</label>
-           <div class="card">
            <input value="<%= item.preco %>" class="form-control" type="text" name="preco">
+           <label>Quantidade em estoque</label>
+           <input type="number" class="form-control" name="quantidade" value="<%= item.quantidade %>" >
+
+
+           <div class="card">
+          
            <div class="card" style="height: 10%; width: 10%;">
             <div class="card-body">
                <img class="card-img" src=".../../../../<%= item.imagem %>" alt="Imagem do item">

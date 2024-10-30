@@ -28,16 +28,18 @@ router.get("/itens",(req,res)=>{
 
 router.post("/itens/cadastrar",upload.single('imagem'), async(req,res)=>{
 
-    let{codigo,nome,detalhes,preco} = req.body;
+    let{codigo,nome,detalhes,preco,quantidade} = req.body;
 
     const imagemPath = req.file ? req.file.path.replace(/\\/g, '/') : null;
+    
   
      await Item.create({
         codigo:codigo,
         nome:nome,
         detalhes:detalhes,
         preco:preco,
-        imagem:imagemPath
+        imagem:imagemPath,
+        quantidade:quantidade
     }).then(()=>{
 
         res.redirect("/itens")

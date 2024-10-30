@@ -21,6 +21,10 @@ const Item = connection.define('item',{
     imagem: {
         type: Sequelize.STRING,
         allowNull: true
+    },
+    quantidade:{
+        type: Sequelize.INTEGER,
+        allowNull:false
     }
     
 });
