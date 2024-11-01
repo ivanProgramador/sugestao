@@ -33,9 +33,6 @@ router.post('/usuario/atualizar',(req,res)=>{
 
 });
 
-
-
-
 router.post('/usuario/cadastrar',async(req,res)=>{
 
 
