@@ -12,7 +12,7 @@ const Usuario = connection.define('usuario',{
         allowNull:false
     },
     senha:{
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull:false
 
     },

@@ -4,6 +4,18 @@ const bodyParser = require("body-parser");
 const connection = require("./database/database");
 const multer = require('multer');
 const path = require('path');
+const session = require("express-session")
+const bcrypt = require("bcrypt");
+const authenticaMid = require("./midwares/autenticaMid");
+
+app.use(session({
+    secret:"chavedeseguranca",
+    resave: false,
+    saveUninitialized: true
+}));
+
+
+
 
 
 const storage = multer.diskStorage({
@@ -36,10 +48,15 @@ const Item = require("./models/item");
 //controllers
 const itensController = require("./controllers/itemController");
 const usuariosController = require("./controllers/usuariosController");
+const loginController = require("./controllers/loginController");
 
 app.use("/",usuariosController);
+
 app.use("/",itensController);
-app.use("/",(req,res)=>{
+
+app.use("/",loginController);
+
+app.use("/",authenticaMid,(req,res)=>{
      res.render("index");
 });
 app.listen(8070,()=>{

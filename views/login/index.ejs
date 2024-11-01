@@ -1,0 +1,28 @@
+<%- include('../partials/header')-%>
+ 
+<div class="container align-center ">
+
+
+     <div class="card mt-5" >
+         <div class="card-header">
+            <h3 class="card-title">
+                 Bem vindo 
+            </h3>
+         </div>
+
+          <div class="card-body">
+
+              <form action="/login" method="post">
+                
+                 <label for="login">Login</label>
+                 <input class="form-control" type="text" name="login"><br>
+
+                 <label for="senha">Senha</label>
+                 <input class="form-control" type="password" name="senha"><br>
+                 <button class="btn btn-secondary">Entrar</button>
+           </form>
+             
+          </div>
+     </div>
+</div>
+<%- include('../partials/footer')-%>
