@@ -1,0 +1,9 @@
+existem 2 tipos de validação possiveis 
+
+1 -(front-end) validação do lado cliente definindo o compo como obrigatório no html  
+    porém se o susuario tiver conecimento avançados ele vai conseguir alterara o html
+    e remover a obrigatoriedade do campo por isso essa não é a forma mais segura.
+
+2 -(back-end) validação dentro do servidor, éa forma mais indicada porque o cliente não tem acesso,
+    a logica de validação que esta dentro da rota.
+

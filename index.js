@@ -4,15 +4,10 @@ const bodyParser = require("body-parser");
 const connection = require("./database/database");
 const multer = require('multer');
 const path = require('path');
-const session = require("express-session")
-const bcrypt = require("bcrypt");
 
 
-app.use(session({
-    secret:"chavedeseguranca",
-    resave: false,
-    saveUninitialized: true
-}));
+
+
 
 
 
@@ -47,10 +42,10 @@ const Item = require("./models/item");
 
 //controllers
 const itensController = require("./controllers/itemController");
-const usuariosController = require("./controllers/usuariosController");
 
 
-app.use("/",usuariosController);
+
+
 
 app.use("/",itensController);
 
@@ -59,6 +54,11 @@ app.use("/",itensController);
 app.use("/",(req,res)=>{
      res.render("index");
 });
+
+
+
+
+
 app.listen(8070,()=>{
     console.log('online');
 })

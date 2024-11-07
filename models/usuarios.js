@@ -1,32 +1,22 @@
 const Sequelize = require("sequelize");
 const connection = require("../database/database");
+const bcrypt = require('bcrypt');
 
 
-const Usuario = connection.define('usuario',{
-    nome:{
-        type: Sequelize.STRING,
-        allowNull:false 
-    },
-    login:{
-        type: Sequelize.INTEGER,
-        allowNull:false
-    },
-    senha:{
-        type: Sequelize.STRING,
-        allowNull:false
 
-    },
-    detalhes:{
-        type: Sequelize.STRING,
-        allowNull:false 
+const Usuario = connection.define('Usuario', {
+  email: {
+    type: Sequelize.STRING,
+    unique: true,
+    allowNull: false,
+  },
+  senha: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  }
+});
 
-    },
-    nivel:{
-        type: Sequelize.INTEGER,
-        allowNull:false
-    }
 
-})
 
 Usuario.sync({force:false});
 
