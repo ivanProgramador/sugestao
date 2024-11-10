@@ -20,7 +20,28 @@ app.use(session({
 app.use(flash());
 
 app.get("/",(req,res)=>{
-    res.render("index")
+    
+    //recebendo as flash sessions na rota index 
+
+    var emailError = req.flash("emailError");
+    var pontosError = req.flash("pontosError");
+    var nomeError = req.flash("nomeError");
+
+    
+
+
+    //caso o cliente tenha acertado tudo e as flashes fiquem vazias
+    
+    emailError =(emailError == undefined || emailError.length === 0)? undefined: emailError;
+    pontosError =(pontosError == undefined || pontosError.length === 0)? undefined: pontosError;
+    nomeError =(nomeError == undefined || nomeError.length === 0)? undefined: nomeError;
+    
+
+   
+       
+
+    //enviando as flashes atráves da rota 
+    res.render("index",{emailError,pontosError,nomeError});
 });
 
 app.post("/form",(req,res)=>{
@@ -60,6 +81,18 @@ app.post("/form",(req,res)=>{
 
 
         //se todas as variaveis chegaram aqui sem nenhum valor significa que não aconteceram erros
+
+
+        /*
+          flash sessions são sessões que só duram uma requisição
+          nesse caso eu estou usando isso para enviar uma mensagem 
+          ao usuário para que ele saiba qual foi erro  que ele 
+          cometeu ao tentar entrar  
+        */ 
+
+        req.flash("emailError",emailError);
+        req.flash("pontosError",pontosError);
+        req.flash("nomeError",nomeError);
           
         res.redirect("/")
 
