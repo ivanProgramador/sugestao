@@ -42,21 +42,13 @@ const Item = require("./models/item");
 
 //controllers
 const itensController = require("./controllers/itemController");
-
-
-
+const usuarioController = require("./controllers/usuarioController");
+const loginController = require("./controllers/loginController");
 
 
 app.use("/",itensController);
-
-
-
-app.use("/",(req,res)=>{
-     res.render("index");
-});
-
-
-
+app.use("/",usuarioController);
+app.use("/",loginController);
 
 
 app.listen(8070,()=>{

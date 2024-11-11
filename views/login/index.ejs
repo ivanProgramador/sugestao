@@ -1,10 +1,16 @@
 <%- include('../partials/header')-%>
- 
-<form action="/login" method="POST">
+
+<h1>entrada</h1>
+
+<form action="/entrar" method="POST">
+    <h1> <%= erroUsu %>  </h1>
      <label for="email">Email:</label>
-     <input type="email" name="email" required>
+     <input type="email" name="email" >
+     <%= emailError %><br>
      <label for="senha">Senha:</label>
-     <input type="password" name="senha" required>
+     <input type="password" name="senha" >
+     <%= senhaError %><br>
+
      <button type="submit">Entrar</button>
    </form>
    
